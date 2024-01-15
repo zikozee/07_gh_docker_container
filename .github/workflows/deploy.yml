@@ -20,8 +20,10 @@ jobs:
 #        NODE_ENV: development
     env:
       MONGODB_CONNECTION_PROTOCOL: mongodb
-      # same as service label
-      MONGODB_CLUSTER_ADDRESS: mongodb
+      # same as service label i.e mongodb
+#      MONGODB_CLUSTER_ADDRESS: mongodb
+      # however, if we are just using the runner
+      MONGODB_CLUSTER_ADDRESS: 127.0.0.1:27017
       MONGODB_USERNAME: root
       MONGODB_PASSWORD: example
       PORT: 8080
@@ -32,6 +34,9 @@ jobs:
     services:
       mongodb:
         image: mongo
+        # however, if we are just using the runner the ports must be opened
+        ports:
+          - 27017:27017
         env:
           MONGO_INITDB_ROOT_USERNAME: root
           MONGO_INITDB_ROOT_PASSWORD: example
