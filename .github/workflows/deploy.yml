@@ -12,9 +12,10 @@ jobs:
     environment: testing
     # the image is hosted on the ubuntu-latest but all jobs, steps now run within the container
     runs-on: ubuntu-latest
-#    container: node:16
-    container:
-      image: node:16
+##    container: node:16
+#      # however, if we are just using the runner
+#    container:
+#      image: node:16
       # env needed by the image
 #      env:
 #        NODE_ENV: development
