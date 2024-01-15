@@ -19,11 +19,22 @@ jobs:
 #      env:
 #        NODE_ENV: development
     env:
-      MONGODB_CONNECTION_PROTOCOL: mongodb+srv
-      MONGODB_CLUSTER_ADDRESS: cluster0.ft6zcmv.mongodb.net
-      MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
-      MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
+      MONGODB_CONNECTION_PROTOCOL: mongodb
+      # same as service label
+      MONGODB_CLUSTER_ADDRESS: mongodb
+      MONGODB_USERNAME: root
+      MONGODB_PASSWORD: example
       PORT: 8080
+    # service containers (they always run in containers) are like side-cars that can run alongside Jobs to provide some extra service. e.g :: database for testing
+    # can be used with containers or the runner machine (i.e runs-on: ubuntu-latest)
+    # we can as docker use the label to connect to the services as git action creates a dns
+    # hence we can use the "test" job and connect to the mongodb spun up in the service container
+    services:
+      mongodb:
+        image: mongo
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: example
     steps:
       - name: Get Code
         uses: actions/checkout@v3
